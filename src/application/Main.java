@@ -75,11 +75,13 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent event)
             {
-              File file = FileSave.simpleSave(primaryStage);
+//              File file = FileSave.simpleSave(primaryStage);
+        	  grid.getChildren().removeAll(grid.getChildren());
+              File file = defineColumns(grid, primaryStage, 1, 1);
               Label pathLabel = new Label ("File saved to: " + file.getAbsolutePath());
-              grid.add(pathLabel, 1, 5);
+              grid.add(pathLabel, 1, 2);
 
-      		  addClientButton(grid, file, primaryStage);
+//      		  addClientButton(grid, file, primaryStage);
             }
         });
         
@@ -94,6 +96,57 @@ public class Main extends Application {
 
       		  addClientButton(grid, file, primaryStage);
             }
+        });
+	}
+	
+	public static File defineColumns(GridPane grid, Stage stage, int col, int row) {
+		returnButton(grid, stage, col+1, row);
+		addColumnButton(grid, 1, row+2);
+		File dummy = new File("dummy");
+		return dummy;
+	}
+	
+	public static void columnLabel(GridPane grid, int col, int row) {
+		Label nameLabel = new Label("Column Name:");
+		nameLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, 15));
+		nameLabel.setPrefWidth(150);
+		TextField nameText = new TextField();
+        nameText.setPrefWidth(300);
+        GridHelper.createHBox(grid, nameLabel, nameText, col, row);
+        addColumnButton(grid, col, row+1);
+	}
+	
+	public static void addColumnButton(GridPane grid, int col, int row) {
+		Button btn2 = new Button("Add Column");
+		HBox hbBtn2 = new HBox(10);
+		hbBtn2.setAlignment(Pos.BOTTOM_RIGHT);
+		hbBtn2.getChildren().add(btn2);
+		grid.add(hbBtn2, col+1, row);
+		
+		Button btn = new Button("Save");
+		HBox hbBtn = new HBox(10);
+		hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
+		hbBtn.getChildren().add(btn);
+		grid.add(hbBtn, col+1, row+1);
+				  
+        btn2.setOnAction(new EventHandler<ActionEvent>() {
+      	  @Override
+      	  public void handle(ActionEvent Event) {
+      		  GridHelper.deleteHBox(grid, hbBtn2);
+      		  GridHelper.deleteHBox(grid, hbBtn);
+      		  columnLabel(grid, col, row);
+      	  }
+        });
+        
+        btn.setOnAction(new EventHandler<ActionEvent>() {
+      	  @Override
+      	  public void handle(ActionEvent Event) {
+//      		  if (status.status == true) {
+//            		  clientForm(grid, file, stage);
+//      		  } else if (status.status == false) {
+//      			  errorPage(grid, status, stage);
+//      		  }
+      	  }
         });
 	}
 	
@@ -129,91 +182,91 @@ public class Main extends Application {
 		nameLabel.setPrefWidth(labelWidth);
 		TextField nameText = new TextField();
         nameText.setPrefWidth(300);
-        createHBox(grid, nameLabel, nameText, 1, 1);
+        GridHelper.createHBox(grid, nameLabel, nameText, 1, 1);
 		
 		Label addressLabel = new Label("Address:");
 		addressLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, fontSize));
 		addressLabel.setPrefWidth(labelWidth);
 		TextField addressText = new TextField();
         addressText.setPrefWidth(300);
-        createHBox(grid, addressLabel, addressText, 1, 2);
+        GridHelper.createHBox(grid, addressLabel, addressText, 1, 2);
         
         Label phoneLabel = new Label("Phone Number:");
 		phoneLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, fontSize));
 		phoneLabel.setPrefWidth(labelWidth);
 		TextField phoneText = new TextField();
 		phoneText.setPrefWidth(300);
-        createHBox(grid, phoneLabel, phoneText, 1, 3);
+		GridHelper.createHBox(grid, phoneLabel, phoneText, 1, 3);
         
         Label emailLabel = new Label("E-Mail:");
         emailLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, fontSize));
         emailLabel.setPrefWidth(labelWidth);
 		TextField emailText = new TextField();
 		emailText.setPrefWidth(300);
-        createHBox(grid, emailLabel, emailText, 1, 4);
+		GridHelper.createHBox(grid, emailLabel, emailText, 1, 4);
         
         Label contactDateLabel = new Label("Contact Date:");
         contactDateLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, fontSize));
         contactDateLabel.setPrefWidth(labelWidth);
 		TextField contactDateText = new TextField();
 		contactDateText.setPrefWidth(300);
-        createHBox(grid, contactDateLabel, contactDateText, 1, 5);
+		GridHelper.createHBox(grid, contactDateLabel, contactDateText, 1, 5);
         
         Label contactMethodLabel = new Label("Contact Method:");
         contactMethodLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, fontSize));
         contactMethodLabel.setPrefWidth(labelWidth);
 		TextField contactMethodText = new TextField();
 		contactMethodText.setPrefWidth(300);
-        createHBox(grid, contactMethodLabel, contactMethodText, 1, 6);
+		GridHelper.createHBox(grid, contactMethodLabel, contactMethodText, 1, 6);
 
         Label mailReturnedLabel = new Label("Mail Returned:");
         mailReturnedLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, fontSize));
         mailReturnedLabel.setPrefWidth(labelWidth);
 		TextField mailReturnedText = new TextField();
 		mailReturnedText.setPrefWidth(300);
-        createHBox(grid, mailReturnedLabel, mailReturnedText, 1, 7);
+		GridHelper.createHBox(grid, mailReturnedLabel, mailReturnedText, 1, 7);
         
         Label notesLabel = new Label("Notes:");
         notesLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, fontSize));
         notesLabel.setPrefWidth(labelWidth);
 		TextField notesText = new TextField();
 		notesText.setPrefWidth(300);
-        createHBox(grid, notesLabel, notesText, 1, 8);
+		GridHelper.createHBox(grid, notesLabel, notesText, 1, 8);
         
         Label nextStepsLabel = new Label("Next Steps:");
         nextStepsLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, fontSize));
         nextStepsLabel.setPrefWidth(labelWidth);
 		TextField nextStepsText = new TextField();
 		nextStepsText.setPrefWidth(300);
-        createHBox(grid, nextStepsLabel, nextStepsText, 1, 9);
+		GridHelper.createHBox(grid, nextStepsLabel, nextStepsText, 1, 9);
         
         Label docsReceivedLabel = new Label("Documents Received:");
         docsReceivedLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, fontSize));
         docsReceivedLabel.setPrefWidth(labelWidth);
 		TextField docsReceivedText = new TextField();
 		docsReceivedText.setPrefWidth(300);
-        createHBox(grid, docsReceivedLabel, docsReceivedText, 1, 10);
+		GridHelper.createHBox(grid, docsReceivedLabel, docsReceivedText, 1, 10);
         
         Label claimPacketIdLabel = new Label("Claim Packet ID:");
         claimPacketIdLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, fontSize));
         claimPacketIdLabel.setPrefWidth(labelWidth);
 		TextField claimPacketText = new TextField();
 		claimPacketText.setPrefWidth(300);
-        createHBox(grid, claimPacketIdLabel, claimPacketText, 1, 11);
+		GridHelper.createHBox(grid, claimPacketIdLabel, claimPacketText, 1, 11);
         
         Label claimSubmissionDateLabel = new Label("Claim Submission Date:");
         claimSubmissionDateLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, fontSize));
         claimSubmissionDateLabel.setPrefWidth(labelWidth);
 		TextField claimSubmissionDateText = new TextField();
 		claimSubmissionDateText.setPrefWidth(300);
-        createHBox(grid, claimSubmissionDateLabel, claimSubmissionDateText, 1, 12);
+		GridHelper.createHBox(grid, claimSubmissionDateLabel, claimSubmissionDateText, 1, 12);
         
         Label claimStatusLabel = new Label("Claim Status:");
         claimStatusLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, fontSize));
         claimStatusLabel.setPrefWidth(labelWidth);
 		TextField claimStatusText = new TextField();
 		claimStatusText.setPrefWidth(300);
-        createHBox(grid, claimStatusLabel, claimStatusText, 1, 13);
+		GridHelper.createHBox(grid, claimStatusLabel, claimStatusText, 1, 13);
 		
         btn.setOnAction(new EventHandler<ActionEvent>() {
         	  @Override
@@ -253,13 +306,6 @@ public class Main extends Application {
 	      		 startPage(grid, stage);
 	      	 }
 	     });
-	}
-	
-	public static void createHBox(GridPane grid, Label label, TextField tf, int col, int row) {
-		HBox hb = new HBox();
-		hb.getChildren().addAll(label, tf);
-		hb.setSpacing(10);	
-		grid.add(hb, col, row);
 	}
 	
 	public static void main(String[] args) {

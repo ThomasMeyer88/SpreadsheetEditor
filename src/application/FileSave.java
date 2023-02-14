@@ -76,6 +76,7 @@ public class FileSave {
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		XSSFSheet spreadsheet = workbook.createSheet(" Client Data ");
 		XSSFRow row;
+
 		Map<String, Object[]> clientData = new TreeMap<String, Object[]>();
 		clientData.put("1", new Object[] { "Name", "Address", "Phone", "E-Mail", "Contact Date", "Contact Method", "Mail Returned",
 				"Notes", "Next Steps", "Documents Received", "Claim Packet ID", "Claim Submission Date", "Claim Status"});
