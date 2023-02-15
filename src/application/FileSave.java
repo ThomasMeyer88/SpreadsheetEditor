@@ -1,6 +1,7 @@
 package application;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -72,6 +73,13 @@ public class FileSave {
 		return status;
 	}
 	
+	public static File initSave(Stage primaryStage) {
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		@SuppressWarnings("unused")
+		XSSFSheet spreadsheet = workbook.createSheet(" New Sheet");
+		return saveToFile(primaryStage, workbook);
+	}
+	
 	public static File simpleSave(Stage primaryStage) {
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		XSSFSheet spreadsheet = workbook.createSheet(" Client Data ");
@@ -99,6 +107,56 @@ public class FileSave {
 			}
 		}
 		return saveToFile(primaryStage, workbook);
+	}
+	
+	public static Status saveColumnTitles(File file, Stage primaryStage, ArrayList<String> strArr) {
+		Map<String, Object[]> clientData = new TreeMap<String, Object[]>();
+		Status status = new Status();
+		try {
+			XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream(file.getAbsolutePath()));
+			XSSFSheet spreadsheet = workbook.getSheetAt(0);
+			XSSFRow row;
+			clientData.put("1", strArr.toArray());
+
+			// writing the data into the sheets...
+			
+			Set<String> keyid = clientData.keySet();
+
+			for (String key : keyid) {
+
+				row = spreadsheet.createRow(0);
+				Object[] objectArr = clientData.get(key);
+				int cellid = 0;
+
+				for (Object obj : objectArr) {
+					Cell cell = row.createCell(cellid++);
+					cell.setCellValue((String)obj);
+				}
+			}
+			try (FileOutputStream outputStream = new FileOutputStream(file.getAbsolutePath())) {
+	            workbook.write(outputStream);
+	            workbook.close();
+	        }
+	        catch (IOException e) {
+	          e.printStackTrace();
+	          status.setReport(e.toString());
+	  		  status.setStatus(false);
+	  		  return status;
+	        }
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			status.setReport(e.toString());
+	  		status.setStatus(false);
+	  		return status;
+		} catch (IOException e) {
+			e.printStackTrace();
+			status.setReport(e.toString());
+	  		status.setStatus(false);
+	  		return status;
+		}
+		status.setReport("Client Information Saved");
+		status.setStatus(true);
+		return status;
 	}
 
 	public static File saveToFile(Stage primaryStage, XSSFWorkbook workbook) {
